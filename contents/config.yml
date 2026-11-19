@@ -1,0 +1,20 @@
+title: MonoHair 复现 · 三维发丝与剪发实验
+page-top-title: MonoHair 复现
+top-section-bg-text: MonoHair 复现
+copyright-text: MonoHair 独立复现与下游实验 · 非官方项目页
+github-link:
+  text: 复现仓库
+  href: https://github.com/Snowflake-Pink/monohair-repro
+license-link:
+  text: 模板许可证
+  href: LICENSE
+sections:
+  - id: demos
+    nav: 剪发演示
+    title: 从长发到短发
+  - id: results
+    nav: 复现结果
+    title: 两个样例的复现结果
+  - id: home
+    nav: 项目与来源
+    title: 项目与来源

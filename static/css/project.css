@@ -1,0 +1,104 @@
+:root {
+    --ink: #29241f;
+    --paper: #f9f6f0;
+    --tint: #eee7dd;
+    --accent: #784625;
+    --hairline: #d7cabe;
+    --display: system-ui, "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+
+body { color: var(--ink); background: var(--paper); font-family: var(--display); }
+.header { border-bottom: 1px solid var(--hairline); background: var(--paper); }
+
+body .container {
+    width: min(100%, 1140px);
+    max-width: none;
+    padding-inline: clamp(1.1rem, 4vw, 2.75rem) !important;
+}
+
+#mainNav .navbar-brand, #mainNav .nav-link { color: var(--ink); font-family: var(--display); }
+#mainNav .nav-link:hover, #mainNav .nav-link.active { color: var(--accent); }
+
+#top-section {
+    height: auto;
+    padding: clamp(5.5rem, 10vw, 8rem) 0 clamp(2rem, 6vw, 4rem);
+    color: var(--paper);
+    background: #24211e;
+}
+
+#top-section::before, #top-section::after, .page-skeleton { display: none; }
+
+.project-hero {
+    display: grid;
+    grid-template-columns: 1.12fr minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1.75rem, 6vw, 5.25rem);
+}
+
+.project-eyebrow, .project-render figcaption {
+    font-size: .77rem;
+    font-weight: 650;
+    letter-spacing: .13em;
+}
+
+.project-eyebrow { color: #e9b885; }
+
+#top-section h1 {
+    font-family: var(--display);
+    font-size: clamp(2.35rem, 5.25vw, 4.125rem);
+    letter-spacing: -.06em;
+    line-height: 1.08;
+    margin: .25em 0;
+}
+
+.project-lead { max-width: 28em; color: #e4dad0; font-size: clamp(1.02rem, 2.1vw, 1.3rem); line-height: 1.8; }
+.project-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.5rem; margin-top: 1.65rem; }
+.project-actions a { font-weight: 650; }
+.project-primary { padding: .7rem 1rem; background: #e9b885; color: #2d2118; text-decoration: none; }
+.project-primary:hover { background: #ffd2a4; color: #2d2118; }
+.project-secondary, .project-secondary:hover { color: var(--paper); text-underline-offset: .25em; }
+
+.project-render { min-width: 0; margin: 0; }
+.project-render img { display: block; width: 100%; height: auto; aspect-ratio: 1.22; object-fit: cover; object-position: 50% 24%; }
+.project-render figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .3rem 1rem; margin-top: .62rem; color: #e0c7ac; }
+
+#sections > section {
+    scroll-margin-top: 4.6rem;
+    padding-block: clamp(2.5rem, 7vw, 5rem);
+    border-top: 1px solid var(--hairline);
+    background: var(--paper) !important;
+}
+
+#sections > .bg-gradient-primary-to-secondary-gray { background: var(--tint) !important; }
+
+#sections header h2 {
+    margin-bottom: .65rem;
+    color: var(--ink);
+    font-family: var(--display) !important;
+    font-size: clamp(1.65rem, 3.8vw, 2.55rem);
+    line-height: 1.26;
+}
+
+#sections .main-body { font-size: 1rem; font-weight: 400; line-height: 1.75; text-align: start; }
+#sections .main-body > p { max-width: 48rem; }
+#sections a { color: var(--accent); text-underline-offset: .18em; }
+.project-demos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 3.5rem); margin-top: 1.5rem; }
+.project-demos figure { margin: 0; }
+.project-demos video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #24211e; object-fit: contain; }
+.project-demos figcaption { padding-top: .75rem; }
+.project-demos figcaption strong, .project-demos figcaption span { display: block; }
+.project-demos figcaption a { font-size: .87rem; }
+
+#results table { width: 100%; margin-block: 1.2rem; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+#results th, #results td { padding: .62rem .35rem; border-bottom: 1px solid var(--hairline); overflow-wrap: anywhere; }
+#results th:first-child, #results td:first-child { padding-left: 0; }
+#results th:last-child, #results td:last-child { padding-right: 0; }
+#results code { color: var(--accent); }
+.bg-bottom { background: #24211e; }
+.bg-bottom a { color: var(--paper); text-underline-offset: .18em; }
+
+@media (max-width: 720px) {
+    .project-hero, .project-demos { grid-template-columns: 1fr; }
+    .project-render { max-width: 34rem; }
+    #results table { font-size: .85rem; }
+}
