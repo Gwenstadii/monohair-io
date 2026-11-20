@@ -1,6 +1,5 @@
-title: MonoHair 复现 · 三维发丝与剪发实验
+title: MonoHair 复现 · 发丝重建与剪烫规划
 page-top-title: MonoHair 复现
-top-section-bg-text: MonoHair 复现
 copyright-text: MonoHair 独立复现与下游实验 · 非官方项目页
 github-link:
   text: 复现仓库
@@ -9,12 +8,19 @@ license-link:
   text: 模板许可证
   href: LICENSE
 sections:
+  - id: planning
+    nav: 剪烫规划
+    eyebrow: 01 / 反向规划
+    title: 给定一个发型，怎么剪出来？
   - id: demos
     nav: 剪发演示
-    title: 从长发到短发
+    eyebrow: 02 / 剪发放映室
+    title: 同一组发丝，两种剪法。
   - id: results
     nav: 复现结果
-    title: 两个样例的复现结果
+    eyebrow: 03 / 重建记录
+    title: 和作者发布的结果有多接近？
   - id: home
     nav: 项目与来源
+    eyebrow: 04 / 资料索引
     title: 项目与来源

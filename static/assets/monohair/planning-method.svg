@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="420" viewBox="0 0 600 420" font-family="system-ui, Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 8 4 0 8" fill="#826126"/>
+    </marker>
+  </defs>
+  <rect width="600" height="420" fill="#f6f2e9"/>
+  <g stroke="#826126" stroke-width="1.5" fill="none">
+    <path d="M300 74V92H113V111" marker-end="url(#arrow)"/>
+    <path d="M300 92V111" marker-end="url(#arrow)"/>
+    <path d="M300 92H487V111" marker-end="url(#arrow)"/>
+    <path d="M113 171V212" marker-end="url(#arrow)"/>
+    <path d="M300 171V212" marker-end="url(#arrow)"/>
+    <path d="M487 171V212" marker-end="url(#arrow)"/>
+    <path d="M113 275V303H487V275"/>
+    <path d="M300 275V333" marker-end="url(#arrow)"/>
+  </g>
+  <g fill="#eee4d2" stroke="#c8bfae">
+    <rect x="200" y="22" width="200" height="52"/>
+    <rect x="30" y="111" width="166" height="60"/>
+    <rect x="217" y="111" width="166" height="60"/>
+    <rect x="404" y="111" width="166" height="60"/>
+  </g>
+  <g fill="#f6f2e9" stroke="#826126">
+    <rect x="30" y="212" width="166" height="63"/>
+    <rect x="217" y="212" width="166" height="63"/>
+    <rect x="404" y="212" width="166" height="63"/>
+  </g>
+  <rect x="130" y="333" width="340" height="58" fill="#272822"/>
+  <g fill="#242420" text-anchor="middle" font-size="20" font-weight="650">
+    <text x="300" y="55">对齐目标发型</text>
+    <text x="113" y="148">目标卷度</text>
+    <text x="300" y="148">目标发流</text>
+    <text x="487" y="148">占据体积</text>
+    <text x="113" y="250">卷杠规格</text>
+    <text x="300" y="250">定型路径</text>
+    <text x="487" y="250">参考剪长</text>
+    <text x="300" y="369" fill="#f6f2e9">拟合剪法 → 预测结果 → 对照目标</text>
+  </g>
+</svg>

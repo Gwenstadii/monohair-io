@@ -25,7 +25,9 @@ assert.equal(
 );
 assert.equal(index.includes(' mt5 '), false, 'invalid mt5 class should not be used');
 assert.equal(index.includes(' md5'), false, 'invalid md5 class should not be used');
-assert.match(index, /<img\b[^>]*\balt="[^"]+"/, 'hero render should include alt text');
+assert.match(index, /role="img" aria-label="[^"]+"/, 'comparison should have a text equivalent');
+assert.match(index, /<label for="specimen-split">/, 'comparison slider should have a visible label');
+assert.equal([...index.matchAll(/name="specimen-view"/g)].length, 3, 'comparison should offer three views');
 assert.equal(mainCss.includes('background-size: fill'), false, 'background-size: fill is invalid CSS');
 assert.equal(index.includes('github.com/senli1073'), false, 'template should not hard-code the original author GitHub URL');
 assert.equal(/<section[^>]+class="top-section"[^>]+style=/.test(index), false, 'hero background should not be defined with inline styles');
@@ -39,10 +41,10 @@ assert.match(scripts, /typesetPromise/, 'MathJax should be invoked with typesetP
 assert.equal(/MathJax\.typeset\(\)/.test(scripts), false, 'MathJax.typeset() should not be called repeatedly per section');
 assert.equal(/const\s+section_names\s*=/.test(scripts), false, 'section list should come from configuration instead of a JS constant');
 assert.equal(/^nav:\s*$/m.test(config), false, 'navigation should be derived from sections instead of a separate nav list');
-assert.deepEqual(projectConfig.sections.map(({ id }) => id), ['demos', 'results', 'home']);
+assert.deepEqual(projectConfig.sections.map(({ id }) => id), ['planning', 'demos', 'results', 'home']);
 assert.equal(/sections:\n(?:\s+-\s+\w+\n?)+$/m.test(config), false, 'sections should not be a plain string list');
 assert.equal(/<ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">\s*<li/s.test(index), false, 'navigation items should be rendered from configuration');
-assert.match(index, /<main id="sections"><\/main>/, 'content sections should be rendered into a single sections container');
+assert.match(index, /<main id="sections"[^>]*><\/main>/, 'content sections should be rendered into a single sections container');
 assert.equal(/<section[^>]+id="home"/.test(index), false, 'home section should not be hard-coded in index.html');
 assert.equal(/<section[^>]+id="publications"/.test(index), false, 'publications section should not be hard-coded in index.html');
 assert.equal(/<section[^>]+id="awards"/.test(index), false, 'awards section should not be hard-coded in index.html');
@@ -50,8 +52,12 @@ const rendered = projectConfig.sections.map(({ id, nav, title }) => {
   assert.ok(nav && title, `missing display text for ${id}`);
   return parse(read(`contents/${id}.md`), { mangle: false, headerIds: false });
 });
-assert.equal([...rendered[0].matchAll(/<video\b[^>]*\bcontrols\b/g)].length, 2, 'both demos should have playback controls');
-assert.match(rendered[1], /<table>/, 'results should render as a table');
+assert.equal([...rendered[1].matchAll(/<video\b[^>]*\bcontrols\b/g)].length, 2, 'both demos should have playback controls');
+assert.match(rendered[2], /<table>/, 'results should render as a table');
+const planning = rendered[0];
+assert.match(planning, /<img[^>]*planning-method\.svg[^>]*alt="[^"]+"/, 'method figure should include a text alternative');
+assert.deepEqual([...planning.matchAll(/<meter[^>]*value="([\d.]+)"/g)].map((match) => match[1]), ['0.452', '0.588', '0.632', '0.758', '0.846', '0.943']);
+assert.match(planning, /0\.919 不是可执行的理发方案/, 'constrained evaluation should distinguish the shortcut score');
 for (const [, asset] of [index, ...rendered].join('\n').matchAll(/\b(?:src|href|poster)="([^"#:]+)"/g)) {
   const resolved = new URL(asset, projectBase);
   assert.ok(resolved.href.startsWith(projectBase.href), `${asset} must resolve inside the project site`);

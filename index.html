@@ -4,8 +4,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="MonoHair 独立复现：三维发丝重建、复现指标与数字剪发演示。" />
-    <title id="title">MonoHair 复现 · 三维发丝与剪发实验</title>
+    <meta name="description" content="MonoHair 独立复现与剪烫反向规划：从三维发丝重建，到由目标发型反推剪烫步骤。" />
+    <meta property="og:title" content="MonoHair 复现 · 从影像，到发丝" />
+    <meta property="og:description" content="拖动查看剪发几何对比，了解如何根据目标发型反推剪烫步骤，并查看单案例实验结果。" />
+    <meta property="og:image" content="https://gwenstadii.github.io/monohair-io/static/assets/monohair/strand-comparison.png" />
+    <meta name="theme-color" content="#f4efe5" />
+    <title id="title">MonoHair 复现 · 发丝重建与剪烫规划</title>
 
     <!-- Icon -->
     <link rel="icon" type="image/svg+xml" href="static/assets/monohair.svg" />
@@ -23,10 +27,12 @@
     <!-- Core JS-->
     <script type="text/javascript" src="static/js/scripts.js"></script>
     <script type="text/javascript" src="static/js/js-yaml.min.js"></script>
+    <script defer src="static/js/project.js"></script>
 
 </head>
 
 <body id="page-top" class="site-loading">
+    <a class="skip-link" href="#sections">跳到实验内容</a>
     <div id="page-skeleton" class="page-skeleton" aria-hidden="true">
         <div class="skeleton-section skeleton-section-light">
             <div class="container px-5">
@@ -47,7 +53,7 @@
     </div>
 
     <!-- Navigation-->
-    <nav class="header navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+    <nav class="header navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" aria-label="项目导航">
         <div class="container px-5">
             <a id="page-top-title" class="navbar-brand fw-bold" href="#page-top">MonoHair 复现</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
@@ -66,36 +72,59 @@
         <div class="top-section-bg" aria-hidden="true"></div>
         <div class="top-section-content">
             <div class="container px-5 project-hero">
-                <div>
-                    <p class="project-eyebrow">CVPR 2024 · 独立复现</p>
-                    <h1 id="top-section-bg-text">MonoHair 复现</h1>
-                    <p class="project-lead">从单目视频重建三维发丝，再在重建结果上探索数字剪发与发丝仿真。</p>
+                <div class="project-intro">
+                    <p class="project-eyebrow">MONOHAIR / CVPR 2024 独立复现</p>
+                    <h1>从影像，<br>到<span>发丝。</span></h1>
+                    <p class="project-lead">从单目视频重建三维发丝，再用目标发型反推剪发、烫发和定型步骤。</p>
                     <div class="project-actions">
-                        <a class="project-primary" href="#demos">观看剪发演示</a>
-                        <a class="project-secondary" href="https://github.com/Snowflake-Pink/monohair-repro">复现代码 ↗</a>
+                        <a class="project-primary" href="#planning">看剪烫如何规划 <span aria-hidden="true">↓</span></a>
+                        <a class="project-secondary" href="https://github.com/Snowflake-Pink/monohair-repro">复现代码 <span aria-hidden="true">↗</span></a>
                     </div>
                 </div>
-                <figure class="project-render">
-                    <img src="static/assets/monohair/soft-cut-profile.png" width="900" height="1000" alt="柔和剪发后的棕色波浪假发侧视渲染，前侧发尾长于后侧">
-                    <figcaption>BIG WAVY 01 <span>柔和剪发 · 侧视渲染</span></figcaption>
+                <figure class="specimen" data-specimen>
+                    <div class="specimen-bar">
+                        <div class="specimen-id"><span aria-hidden="true"></span> 样本 <b>big_wavy1</b></div>
+                        <fieldset class="view-picker" aria-label="观察角度" hidden>
+                            <label><input type="radio" name="specimen-view" value="front"><span>正面</span></label>
+                            <label><input type="radio" name="specimen-view" value="side" checked><span>侧面</span></label>
+                            <label><input type="radio" name="specimen-view" value="back"><span>背面</span></label>
+                        </fieldset>
+                    </div>
+                    <div class="specimen-stage" data-view="side" role="img" aria-label="侧面正交渲染对比：左侧为剪前波浪长发，右侧为剪后短发">
+                        <img class="specimen-layer specimen-after" src="static/assets/monohair/strand-comparison.png" width="1800" height="1400" alt="">
+                        <div class="specimen-reveal"><img class="specimen-layer specimen-before" src="static/assets/monohair/strand-comparison.png" width="1800" height="1400" alt=""></div>
+                        <span class="specimen-label specimen-label-before" aria-hidden="true">剪前</span>
+                        <span class="specimen-label specimen-label-after" aria-hidden="true">剪后</span>
+                        <span class="specimen-split" aria-hidden="true"></span>
+                    </div>
+                    <div class="specimen-controls" hidden>
+                        <label for="specimen-split">拖动对比剪前／剪后</label>
+                        <input id="specimen-split" type="range" min="0" max="100" value="52" aria-valuetext="剪前占 52%">
+                    </div>
+                    <figcaption>早期几何剪发演示 · 同一相机与尺度 · 采样 6,000 根发丝</figcaption>
                 </figure>
             </div>
+            <ol class="container project-flow" aria-label="项目流程">
+                <li><span>01 / INPUT</span><strong>单目视频</strong></li>
+                <li><span>02 / RECONSTRUCT</span><strong>三维发丝重建</strong></li>
+                <li><span>03 / PLAN</span><strong>反推剪烫步骤</strong></li>
+            </ol>
         </div>
     </section>
     <!-- Top Section -->
 
     <noscript><p class="container px-5 py-4">请启用 JavaScript 查看完整内容，或访问 <a href="https://github.com/Snowflake-Pink/monohair-repro">复现仓库</a>。</p></noscript>
-    <main id="sections"></main>
+    <main id="sections" tabindex="-1"></main>
 
 
     <!-- Footer-->
-    <footer class="bg-bottom text-center py-5">
-        <div class="container px-5">
-            <div class="text-white-50 small">
-                <div id="copyright-text" class="mb-2"></div>
+    <footer class="project-footer">
+        <div class="container footer-content">
+            <div id="copyright-text">MonoHair 独立复现与下游实验 · 非官方项目页</div>
+            <div class="footer-links">
                 <a id="github-link" href="https://github.com/Snowflake-Pink/monohair-repro">复现仓库</a>
-                <span class="mx-1">&middot;</span>
                 <a id="license-link" href="LICENSE">模板许可证</a>
+                <a href="#page-top">回到顶部 ↑</a>
             </div>
         </div>
     </footer>

@@ -78,6 +78,7 @@ function normalizeSections(sections) {
                 id: section.id,
                 nav: section.nav || section.text || section.id.toUpperCase(),
                 title: section.title || section.heading || section.nav || section.text || section.id.toUpperCase(),
+                eyebrow: section.eyebrow || '',
                 icon: section.icon || '',
                 href: section.href || '#' + section.id,
             };
@@ -159,6 +160,12 @@ function renderSections(sections) {
         body.className = 'main-body';
         body.id = section.id + '-md';
 
+        if (section.eyebrow) {
+            const eyebrow = document.createElement('p');
+            eyebrow.className = 'project-eyebrow';
+            eyebrow.textContent = decodeText(section.eyebrow);
+            header.appendChild(eyebrow);
+        }
         header.appendChild(title);
         container.appendChild(header);
         container.appendChild(body);
@@ -330,6 +337,7 @@ function markSiteReady() {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
+    initSpecimen(document.querySelector('[data-specimen]'));
     marked.use({ mangle: false, headerIds: false });
 
     loadConfig()
@@ -340,10 +348,14 @@ window.addEventListener('DOMContentLoaded', event => {
             renderNavigation(getNavigationItems(yml));
             renderSections(sections);
             initBackgroundSlideshow(yml);
-            activateScrollSpy();
             bindResponsiveNavbar();
 
             return Promise.all(getConfiguredSections(yml).map(loadMarkdownSection));
+        })
+        .then(() => {
+            initDemoSwitcher(document.querySelector('.project-demos'));
+            activateScrollSpy();
+            document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
         })
         .then(() => typesetMath())
         .catch(error => console.log(error))
